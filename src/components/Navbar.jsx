@@ -1,11 +1,12 @@
 import React from 'react';
-import { ShieldCheck, Stethoscope, Pill, GitFork, BookOpen, AlertTriangle } from 'lucide-react';
+import { ShieldCheck, Stethoscope, Pill, GitFork, BookOpen, AlertTriangle, ArrowLeftRight } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
     { id: 'screeners', label: 'Screeners & Notes', icon: Stethoscope },
     { id: 'medications', label: 'Medication Dosing Guide', icon: Pill },
     { id: 'pathways', label: 'Step-Therapy Pathways', icon: GitFork },
+    { id: 'crosstaper', label: 'Cross-Taper Calc', icon: ArrowLeftRight },
     { id: 'safety', label: 'Safety & Rule-Outs', icon: AlertTriangle },
   ];
 

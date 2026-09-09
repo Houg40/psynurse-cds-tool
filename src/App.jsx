@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import ScreenerAssessment from './components/ScreenerAssessment';
 import MedicationDirectory from './components/MedicationDirectory';
 import DecisionTreeWizard from './components/DecisionTreeWizard';
+import CrossTaperCalculator from './components/CrossTaperCalculator';
 import SafetyGuide from './components/SafetyGuide';
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
           {activeTab === 'screeners' && <ScreenerAssessment />}
           {activeTab === 'medications' && <MedicationDirectory />}
           {activeTab === 'pathways' && <DecisionTreeWizard />}
+          {activeTab === 'crosstaper' && <CrossTaperCalculator />}
           {activeTab === 'safety' && <SafetyGuide />}
         </main>
       </div>
