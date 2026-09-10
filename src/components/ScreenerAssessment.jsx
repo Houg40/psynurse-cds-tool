@@ -67,6 +67,32 @@ export default function ScreenerAssessment() {
     if (yesCount >= 7) {
       criticalAlert = "BIPOLAR SAFETY GUARDRAIL: Positive MDQ screen detected. Exercise extreme caution before prescribing or increasing SSRI/SNRI monotherapy.";
     }
+  } else if (activeScreenerId === 'aims') {
+    let movementSum = 0;
+    let maxItemScore = 0;
+    activeScreener.questions.forEach((_, idx) => {
+      const val = answers[`aims_${idx}`] || 0;
+      movementSum += val;
+      if (val > maxItemScore) maxItemScore = val;
+    });
+    totalScore = movementSum;
+    
+    // AIMS positive criteria: Score >= 2 (mild) in TWO or more areas OR Score >= 3 (moderate) or 4 (severe) in ONE area
+    const mildCount = activeScreener.questions.filter((_, idx) => (answers[`aims_${idx}`] || 0) >= 2).length;
+    const isTdPositive = maxItemScore >= 3 || mildCount >= 2;
+
+    severityInfo = {
+      severity: isTdPositive 
+        ? "POSITIVE AIMS Screen for Tardive Dyskinesia (TD)" 
+        : totalScore > 0 ? "Minimal Movement Noted (Sub-threshold for TD)" : "Negative AIMS Exam (No Involuntary Movements)",
+      treatmentRecommendation: isTdPositive
+        ? "ALERT: Patient meets clinical criteria for Tardive Dyskinesia. Consider tapering/discontinuing offending antipsychotic, switching to lower TD-risk agent (e.g., Quetiapine or Clozapine), or evaluating for VMAT2 inhibitor therapy (Valbenazine / Deutetrabenazine)."
+        : "Re-screen every 3-6 months for patients on second-generation antipsychotics, or every 3 months for first-generation agents."
+    };
+
+    if (isTdPositive) {
+      criticalAlert = "TARDIVE DYSKINESIA ALERT: Involuntary choreiform/athetoid movements detected. Document informed consent, discuss VMAT2 inhibitor referral, and re-evaluate antipsychotic necessity.";
+    }
   }
 
   // Generate Tebra EHR Note
@@ -74,7 +100,7 @@ export default function ScreenerAssessment() {
     const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
     let note = `CLINICAL RATING ASSESSMENT: ${activeScreener.fullName} (${activeScreener.name})\nDate: ${today}\n`;
     note += `Target Condition: ${activeScreener.targetCondition}\n`;
-    note += `Total Score: ${totalScore} ${activeScreenerId === 'phq9' ? '/ 27' : activeScreenerId === 'gad7' ? '/ 21' : activeScreenerId === 'asrs' ? '/ 6 positive threshold items' : '/ 13 symptoms'}\n`;
+    note += `Total Score: ${totalScore} ${activeScreenerId === 'phq9' ? '/ 27' : activeScreenerId === 'gad7' ? '/ 21' : activeScreenerId === 'aims' ? '/ 28 (Items 1-7)' : activeScreenerId === 'asrs' ? '/ 6 positive threshold items' : '/ 13 symptoms'}\n`;
     note += `Clinical Impression: ${severityInfo ? severityInfo.severity : 'Assessment in progress'}\n`;
     note += `Clinical Recommendation: ${severityInfo ? severityInfo.treatmentRecommendation : 'Complete evaluation'}\n`;
     
@@ -82,7 +108,7 @@ export default function ScreenerAssessment() {
       note += `\n[CRITICAL SAFETY NOTATION]\n${criticalAlert}\n`;
     }
     
-    note += `\nProvider Notes: Assessment administered via clinical interview. Results discussed with patient; aligned with DSM-5-TR diagnostic criteria.`;
+    note += `\nProvider Notes: Assessment administered via clinical interview. Results discussed with patient; aligned with DSM-5-TR diagnostic criteria and insurance audit standards.`;
     return note;
   };
 
@@ -207,7 +233,7 @@ export default function ScreenerAssessment() {
             <div className="flex items-baseline gap-3">
               <span className="text-5xl font-black text-teal-700">{totalScore}</span>
               <span className="text-sm font-semibold text-slate-500">
-                {activeScreenerId === 'phq9' ? '/ 27 points' : activeScreenerId === 'gad7' ? '/ 21 points' : activeScreenerId === 'asrs' ? '/ 6 positive items' : '/ 13 symptoms'}
+                {activeScreenerId === 'phq9' ? '/ 27 points' : activeScreenerId === 'gad7' ? '/ 21 points' : activeScreenerId === 'aims' ? '/ 28 points' : activeScreenerId === 'asrs' ? '/ 6 positive items' : '/ 13 symptoms'}
               </span>
             </div>
 

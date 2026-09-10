@@ -25,11 +25,11 @@
       ],
       "criticalQuestionIndex": 8,
       "severityRanges": [
-        { "min": 0, "max": 4, "severity": "None-minimal", "treatmentRecommendation": "Repeat at follow-up. Support and watchful waiting." },
-        { "min": 5, "max": 9, "severity": "Mild", "treatmentRecommendation": "Watchful waiting, psychoeducation, lifestyle intervention. Follow up in 4-6 weeks." },
-        { "min": 10, "max": 14, "severity": "Moderate", "treatmentRecommendation": "Consider psychotherapy and/or pharmacotherapy (first-line SSRI/SNRI or Bupropion)." },
-        { "min": 15, "max": 19, "severity": "Moderately Severe", "treatmentRecommendation": "Active treatment with pharmacotherapy and/or psychotherapy recommended." },
-        { "min": 20, "max": 27, "severity": "Severe", "treatmentRecommendation": "Immediate initiation of pharmacotherapy; consider specialist psychiatric referral / intensive outpatient." }
+        { "min": 0, "max": 4, "severity": "None-minimal (0-4)", "treatmentRecommendation": "Repeat at follow-up. Support and watchful waiting." },
+        { "min": 5, "max": 9, "severity": "Mild (5-9)", "treatmentRecommendation": "Watchful waiting, psychoeducation, lifestyle intervention. Follow up in 4-6 weeks." },
+        { "min": 10, "max": 14, "severity": "Moderate (10-14)", "treatmentRecommendation": "Consider psychotherapy and/or pharmacotherapy (first-line SSRI/SNRI or Bupropion)." },
+        { "min": 15, "max": 19, "severity": "Moderately Severe (15-19)", "treatmentRecommendation": "Active treatment with pharmacotherapy and/or psychotherapy recommended." },
+        { "min": 20, "max": 27, "severity": "Severe (20-27)", "treatmentRecommendation": "Immediate initiation of pharmacotherapy; consider specialist psychiatric referral / intensive outpatient." }
       ]
     },
     {
@@ -54,10 +54,33 @@
         "Feeling afraid as if something awful might happen"
       ],
       "severityRanges": [
-        { "min": 0, "max": 4, "severity": "Minimal Anxiety", "treatmentRecommendation": "Normal range. Monitor over time." },
-        { "min": 5, "max": 9, "severity": "Mild Anxiety", "treatmentRecommendation": "Supportive therapy, psychoeducation, sleep hygiene, mindfulness." },
-        { "min": 10, "max": 14, "severity": "Moderate Anxiety", "treatmentRecommendation": "Clinically significant. Recommend first-line pharmacotherapy (SSRI/SNRI) and/or CBT." },
-        { "min": 15, "max": 21, "severity": "Severe Anxiety", "treatmentRecommendation": "Active pharmacotherapy indicated. Consider short-term non-controlled adjunct (Hydroxyzine/Buspirone)." }
+        { "min": 0, "max": 4, "severity": "Minimal Anxiety (0-4)", "treatmentRecommendation": "Normal range. Monitor over time." },
+        { "min": 5, "max": 9, "severity": "Mild Anxiety (5-9)", "treatmentRecommendation": "Supportive therapy, psychoeducation, sleep hygiene, mindfulness." },
+        { "min": 10, "max": 14, "severity": "Moderate Anxiety (10-14)", "treatmentRecommendation": "Clinically significant. Recommend first-line pharmacotherapy (SSRI/SNRI) and/or CBT." },
+        { "min": 15, "max": 21, "severity": "Severe Anxiety (15-21)", "treatmentRecommendation": "Active pharmacotherapy indicated. Consider short-term non-controlled adjunct (Hydroxyzine/Buspirone)." }
+      ]
+    },
+    {
+      "id": "aims",
+      "name": "AIMS",
+      "fullName": "Abnormal Involuntary Movement Scale (Tardive Dyskinesia)",
+      "targetCondition": "Tardive Dyskinesia & Antipsychotic Movement Surveillance",
+      "instructions": "Mandatory surveillance for patients on dopamine antagonists / antipsychotics. Rate highest severity observed across 7 movement domains (0 = None, 1 = Minimal, 2 = Mild, 3 = Moderate, 4 = Severe).",
+      "scale": [
+        { "value": 0, "label": "0 - None" },
+        { "value": 1, "label": "1 - Minimal" },
+        { "value": 2, "label": "2 - Mild" },
+        { "value": 3, "label": "3 - Moderate" },
+        { "value": 4, "label": "4 - Severe" }
+      ],
+      "questions": [
+        "Facial and Oral: Muscles of facial expression (frowning, blinking, grimacing)",
+        "Facial and Oral: Lips and perioral area (puckering, pouting, smacking)",
+        "Facial and Oral: Jaw (biting, clenching, chewing, lateral movement)",
+        "Facial and Oral: Tongue (rate only increase in movement, tremor, darting out)",
+        "Extremity Movements: Upper (arms, wrists, hands, fingers: choreic or athetoid movements)",
+        "Extremity Movements: Lower (legs, knees, ankles, toes: lateral knee movement, foot tapping)",
+        "Trunk Movements: Neck, shoulders, hips (rocking, twisting, squirming, pelvic thrusting)"
       ]
     },
     {
