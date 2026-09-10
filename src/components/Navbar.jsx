@@ -17,9 +17,11 @@ export default function Navbar({ activeTab, setActiveTab }) {
           
           {/* Brand & Subtitle */}
           <div className="flex items-center gap-3 flex-shrink-0">
-            <div className="w-9 h-9 rounded-xl bg-teal-600 flex items-center justify-center text-white font-black text-lg shadow-xs flex-shrink-0">
-              Ψ
-            </div>
+            <img 
+              src="./icon-192.png" 
+              alt="PsyNurse CDS Logo" 
+              className="w-10 h-10 object-contain rounded-xl shadow-xs flex-shrink-0 bg-white p-0.5 border border-slate-200/80" 
+            />
             <div className="flex flex-col justify-center">
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-slate-900 text-base leading-none tracking-tight">

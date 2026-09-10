@@ -235,10 +235,17 @@ export default function CrossTaperCalculator() {
         {/* Printable Header (Visible ONLY when printing) */}
         <div className="hidden print:block border-b-2 border-teal-800 pb-4 mb-4">
           <div className="flex justify-between items-start">
-            <div>
-              <h1 className="text-xl font-black text-slate-900 tracking-tight">PSYCHIATRIC NURSE PRACTITIONER SERVICES</h1>
-              <p className="text-xs font-bold text-teal-800">Monica Preder, ARNP, PMHNP-BC • Board Certified Psychiatric Nurse Practitioner</p>
-              <p className="text-[10px] text-slate-500">Telehealth Practice: Washington State • Web: psychiatristnurse.com</p>
+            <div className="flex items-center gap-3">
+              <img 
+                src="./icon-192.png" 
+                alt="PsyNurse Clinic Logo" 
+                className="w-12 h-12 object-contain" 
+              />
+              <div>
+                <h1 className="text-xl font-black text-slate-900 tracking-tight">PSYCHIATRIC NURSE PRACTITIONER SERVICES</h1>
+                <p className="text-xs font-bold text-teal-800">Monica Preder, ARNP, PMHNP-BC • Board Certified Psychiatric Nurse Practitioner</p>
+                <p className="text-[10px] text-slate-500">Telehealth Practice: Washington State • Web: psychiatristnurse.com</p>
+              </div>
             </div>
             <div className="text-right text-[11px] text-slate-600">
               <p className="font-bold">Patient Medication Transition Plan</p>
