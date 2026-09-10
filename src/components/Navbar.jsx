@@ -1,5 +1,6 @@
 import React from 'react';
 import { ShieldCheck, Stethoscope, Pill, GitFork, AlertTriangle, ArrowLeftRight } from 'lucide-react';
+import SuiteSwitcher from './SuiteSwitcher';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
@@ -38,28 +39,32 @@ export default function Navbar({ activeTab, setActiveTab }) {
             </div>
           </div>
 
-          {/* Clean Segmented Navigation Bar */}
-          <nav className="flex items-center p-1 bg-slate-100 rounded-xl border border-slate-200/70 overflow-x-auto scrollbar-none flex-shrink-0">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex-shrink-0 ${
-                    isActive
-                      ? 'bg-white text-teal-800 shadow-xs font-bold'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-                  }`}
-                >
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-teal-600' : 'text-slate-400'}`} />
-                  <span className="hidden sm:inline">{item.label}</span>
-                  <span className="sm:hidden">{item.shortLabel}</span>
-                </button>
-              );
-            })}
-          </nav>
+          {/* Navigation & Suite Switcher */}
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <nav className="flex items-center p-1 bg-slate-100 rounded-xl border border-slate-200/70 overflow-x-auto scrollbar-none flex-shrink-0">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveTab(item.id)}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex-shrink-0 ${
+                      isActive
+                        ? 'bg-white text-teal-800 shadow-xs font-bold'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+                    }`}
+                  >
+                    <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-teal-600' : 'text-slate-400'}`} />
+                    <span className="hidden sm:inline">{item.label}</span>
+                    <span className="sm:hidden">{item.shortLabel}</span>
+                  </button>
+                );
+              })}
+            </nav>
+
+            <SuiteSwitcher currentApp="cds" />
+          </div>
         </div>
       </div>
     </header>
