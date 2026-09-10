@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeftRight, AlertCircle, Clipboard, Check, Sparkles, Calendar, ShieldAlert } from 'lucide-react';
+import { ArrowLeftRight, AlertCircle, Clipboard, Check, Sparkles, Calendar, ShieldAlert, Printer } from 'lucide-react';
 
 const TAPER_MEDICATIONS = [
   { id: 'escitalopram', name: 'Escitalopram (Lexapro)', class: 'SSRI', doses: ['5 mg', '10 mg', '15 mg', '20 mg'], halfLife: '30h' },
@@ -139,8 +139,8 @@ export default function CrossTaperCalculator() {
 
   return (
     <div className="space-y-6">
-      {/* Header Card */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+      {/* Header Card (Hidden on Print) */}
+      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm print:hidden">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-9 h-9 rounded-xl bg-teal-100 flex items-center justify-center text-teal-800">
             <ArrowLeftRight className="w-5 h-5" />
@@ -229,57 +229,109 @@ export default function CrossTaperCalculator() {
         </div>
       </div>
 
-      {/* Cross-Taper Schedule Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+      {/* Cross-Taper Schedule Table & Printable Handout */}
+      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4 print:border-none print:shadow-none print:p-0">
+        
+        {/* Printable Header (Visible ONLY when printing) */}
+        <div className="hidden print:block border-b-2 border-teal-800 pb-4 mb-4">
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-xl font-black text-slate-900 tracking-tight">PSYCHIATRIC NURSE PRACTITIONER SERVICES</h1>
+              <p className="text-xs font-bold text-teal-800">Monica Preder, ARNP, PMHNP-BC • Board Certified Psychiatric Nurse Practitioner</p>
+              <p className="text-[10px] text-slate-500">Telehealth Practice: Washington State • Web: psychiatristnurse.com</p>
+            </div>
+            <div className="text-right text-[11px] text-slate-600">
+              <p className="font-bold">Patient Medication Transition Plan</p>
+              <p>Date: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+            </div>
+          </div>
+          <div className="mt-3 bg-slate-50 p-2.5 rounded border border-slate-200 text-xs flex justify-between">
+            <div><span className="font-bold text-slate-700">Tapering Off:</span> {currentMed.name} ({currentDose})</div>
+            <div><span className="font-bold text-teal-800">Transitioning To:</span> {targetMed.name} (Target: {targetDose})</div>
+          </div>
+        </div>
+
+        {/* Action Header (Hidden on Print) */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-100 pb-4 print:hidden">
           <div className="flex items-center gap-2">
             <Calendar className="w-5 h-5 text-teal-600" />
             <h3 className="text-base font-black text-slate-900">
               Week-by-Week Transition Protocol
             </h3>
           </div>
-          <button
-            onClick={copyInstructions}
-            className="flex items-center gap-1.5 text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white px-3.5 py-2 rounded-xl transition-all shadow-sm"
-          >
-            {copied ? <Check className="w-3.5 h-3.5" /> : <Clipboard className="w-3.5 h-3.5" />}
-            {copied ? 'Copied Patient Instructions!' : 'Copy Patient Portal Instructions'}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => window.print()}
+              className="flex items-center gap-1.5 text-xs font-bold bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2 rounded-xl transition-all shadow-sm"
+              title="Print or save as PDF patient handout"
+            >
+              <Printer className="w-3.5 h-3.5" />
+              <span>Print / Save PDF Handout</span>
+            </button>
+            <button
+              onClick={copyInstructions}
+              className="flex items-center gap-1.5 text-xs font-bold bg-teal-600 hover:bg-teal-500 text-white px-3.5 py-2 rounded-xl transition-all shadow-sm"
+            >
+              {copied ? <Check className="w-3.5 h-3.5" /> : <Clipboard className="w-3.5 h-3.5" />}
+              {copied ? 'Copied Patient Instructions!' : 'Copy Patient Portal Instructions'}
+            </button>
+          </div>
         </div>
 
         {/* Schedule Cards */}
         <div className="space-y-3">
           {schedule.map((step, idx) => (
-            <div key={idx} className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-all">
+            <div key={idx} className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-all print:bg-white print:border-slate-300 print:p-3 print:break-inside-avoid">
               <div className="flex items-center justify-between mb-2">
-                <span className="font-black text-sm text-teal-900 bg-teal-100/70 px-2.5 py-0.5 rounded-md">
+                <span className="font-black text-sm text-teal-900 bg-teal-100/70 px-2.5 py-0.5 rounded-md print:bg-teal-50 print:border print:border-teal-200">
                   {step.week}
                 </span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div className="p-2.5 bg-red-50/50 border border-red-100 rounded-lg">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs print:grid-cols-2">
+                <div className="p-2.5 bg-red-50/50 border border-red-100 rounded-lg print:border-slate-300 print:bg-white">
                   <span className="font-bold text-red-900 block mb-0.5">Tapering Drug A ({currentMed.name}):</span>
                   <span className="text-slate-800 font-medium">{step.drugA}</span>
                 </div>
-                <div className="p-2.5 bg-emerald-50/50 border border-emerald-100 rounded-lg">
+                <div className="p-2.5 bg-emerald-50/50 border border-emerald-100 rounded-lg print:border-slate-300 print:bg-white">
                   <span className="font-bold text-emerald-900 block mb-0.5">Starting Drug B ({targetMed.name}):</span>
                   <span className="text-slate-800 font-medium">{step.drugB}</span>
                 </div>
               </div>
-              <p className="text-[11px] text-slate-500 mt-2 italic">
-                Clinical note: {step.notes}
+              <p className="text-[11px] text-slate-500 mt-2 italic print:text-slate-700">
+                Instructions: {step.notes}
               </p>
             </div>
           ))}
         </div>
 
-        {/* Clinical Disclaimer */}
-        <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-start gap-2.5 mt-4">
-          <ShieldAlert className="w-4 h-4 text-amber-700 flex-shrink-0 mt-0.5" />
-          <span>
-            <strong>Serotonin Syndrome Monitoring:</strong> During cross-titration of two serotonergic agents (SSRI to SNRI), instruct the patient to monitor for severe agitation, hyperreflexia, shivering, diaphoresis, or diarrhea.
-          </span>
+        {/* Patient Safety Guidance & Call-Outs for Handout */}
+        <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-900 flex items-start gap-2.5 mt-4 print:bg-white print:border-slate-300 print:text-slate-800">
+          <ShieldAlert className="w-4 h-4 text-amber-700 flex-shrink-0 mt-0.5 print:hidden" />
+          <div className="space-y-1">
+            <p>
+              <strong>Important Safety Reminders:</strong> Take doses consistently with food and water. Mild temporary adjustments (mild fatigue or stomach upset) can occur during the first week.
+            </p>
+            <p>
+              If you experience sudden high fever, rapid heartbeat, shivering, severe agitation, or allergic rash, contact the clinic or emergency services immediately.
+            </p>
+          </div>
         </div>
+
+        {/* Printable Sign-off / Footer (Visible ONLY when printing) */}
+        <div className="hidden print:block pt-6 mt-6 border-t border-slate-300 text-xs text-slate-600">
+          <div className="flex justify-between items-end">
+            <div>
+              <p className="font-bold text-slate-900">Monica Preder, ARNP, PMHNP-BC</p>
+              <p className="text-[10px]">Licensed Psychiatric Mental Health Nurse Practitioner</p>
+              <p className="text-[10px]">Questions? Contact through the patient portal or phone.</p>
+            </div>
+            <div className="text-right">
+              <div className="border-b border-slate-400 w-48 mb-1"></div>
+              <p className="text-[10px] text-slate-500">Provider Signature / Authorization</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
