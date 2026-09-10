@@ -1,11 +1,12 @@
 import React from 'react';
-import { ShieldCheck, Stethoscope, Pill, GitFork, AlertTriangle, ArrowLeftRight } from 'lucide-react';
+import { ShieldCheck, Stethoscope, Pill, GitFork, AlertTriangle, ArrowLeftRight, HeartPulse } from 'lucide-react';
 import SuiteSwitcher from './SuiteSwitcher';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
     { id: 'screeners', label: 'Screeners & Notes', shortLabel: 'Screeners', icon: Stethoscope },
     { id: 'medications', label: 'Dosing Guide', shortLabel: 'Dosing', icon: Pill },
+    { id: 'interactions', label: 'QTc & Interactions', shortLabel: 'Interactions', icon: HeartPulse },
     { id: 'pathways', label: 'Step-Therapy', shortLabel: 'Pathways', icon: GitFork },
     { id: 'crosstaper', label: 'Cross-Taper', shortLabel: 'Cross-Taper', icon: ArrowLeftRight },
     { id: 'safety', label: 'Safety & Rules', shortLabel: 'Safety', icon: AlertTriangle },
