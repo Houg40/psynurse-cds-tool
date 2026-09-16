@@ -7,9 +7,21 @@ import CrossTaperCalculator from './components/CrossTaperCalculator';
 import SafetyGuide from './components/SafetyGuide';
 import InteractionChecker from './components/InteractionChecker';
 import FeedbackModal from './components/FeedbackModal';
+import AccessLockout from './components/AccessLockout';
 
 export default function App() {
+  const [isUnlocked, setIsUnlocked] = useState(() => {
+    try {
+      return sessionStorage.getItem('psynurse_admin_auth') === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [activeTab, setActiveTab] = useState('screeners');
+
+  if (!isUnlocked) {
+    return <AccessLockout onAdminUnlock={() => setIsUnlocked(true)} />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
